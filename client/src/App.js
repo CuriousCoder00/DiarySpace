@@ -1,10 +1,12 @@
 
 import './App.css';
+import LOGIN from "./components/account/Login";
+
 
 function App() {
   return (
-    <div className="App">
-      
+    <div>
+      <LOGIN/>
     </div>
   );
 }
