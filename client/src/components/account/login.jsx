@@ -7,9 +7,9 @@ import bloggerImg from "../../assets/blooger.png";
 import diarySpaceImg from "../../assets/logo.png";
 
 const Component = styled(Box)`
-  width: 400px;
+  width: 450px;
   margin: auto;
-  box-shadow: 5px 2px 5px 2px rgba(0 0 0/ 0.6);
+  box-shadow: 5px 2px 5px 2px rgba(0 0 0/ 0.4);
 `;
 
 const Image = styled("img")({
@@ -50,18 +50,27 @@ const SignupButton = styled(Button)`
 
 const Text = styled(Typography)`
   color: #878787;
-  font-size: 12px;
+  font-size: 15px;
 `;
+
+const signupInitialValues = {
+  name : ' ',
+  username : ' ',
+  password : ' '
+}
 
 const Login = () => {
   const [account, toggleAccount] = useState("login");
-
+  const [signup, setSignup] = useState(signupInitialValues);
+  const onInputChange = (e) => {
+    setSignup({ ...signup, [e.target.name] : e.target.value});
+  };
   const toggleSignup = () => {
     account === "signup" ? toggleAccount("login") : toggleAccount("signup");
   };
   return (
     <Component>
-      <Box>
+      <Box style={{ margin: 50 }}>
         <Wrapper>
           <Image src={bloggerImg} alt="blogger" />
           <Image
@@ -69,18 +78,18 @@ const Login = () => {
             style={{ filter: "invert(100%)" }}
             alt="DiarySpace"
           />
-          <Text>Create Your Space</Text>
+          <Text style={{ textAlign: "center" }}>Create Your Space</Text>
         </Wrapper>
         {account === "login" ? (
           <Wrapper>
             <TextField
-              varient="standard"
+              variant="standard"
               name="username"
               label="Enter Username"
             />
             <TextField
-              varient="standard"
-              name="password"
+              variant="standard"
+              name="password" type="password"
               label="Enter Password"
             />
 
@@ -95,15 +104,15 @@ const Login = () => {
           </Wrapper>
         ) : (
           <Wrapper>
-            <TextField variant="standard" name="name" label="Enter Name" />
+            <TextField variant="standard" onChange={(e) => onInputChange(e)} name="name" label="Enter Name" />
             <TextField
-              variant="standard"
+              variant="standard" onChange={(e) => onInputChange(e)}
               name="username"
               label="Enter Username"
             />
             <TextField
-              variant="standard"
-              name="password"
+              variant="standard" onChange={(e) => onInputChange(e)}
+              name="password" type="password"
               label="Enter Password"
             />
 

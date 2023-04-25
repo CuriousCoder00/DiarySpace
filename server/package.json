@@ -1,15 +1,27 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "curiouscoder00",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "mongoose": "^7.0.4"
+    "mongoose": "^7.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CuriousCoder00/DiarySpace-A-Blog-Application.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CuriousCoder00/DiarySpace-A-Blog-Application/issues"
+  },
+  "homepage": "https://github.com/CuriousCoder00/DiarySpace-A-Blog-Application#readme",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
