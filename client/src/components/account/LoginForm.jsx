@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { TextField, Box, Button, Typography, styled } from "@mui/material";
 
 import bloggerImg from "../../assets/blooger.png";
 import diarySpaceImg from "../../assets/logo.png";
 import { API } from "../../services/Api";
+import { DataContext } from "../../context/DataProvider";
+
 
 const Component = styled(Box)`
   width: 450px;
   margin: auto;
-  background-color: white;
-  box-shadow: 5px 2px 5px 2px rgba(0 0 0/ 0.4);
+  box-shadow: 3px 2px 5px 2px rgba(0 0 0/ 0.4);
+  background-color: #fff9;
 `;
 
 const Image = styled("img")({
@@ -57,11 +60,15 @@ const Error = styled(Typography)`
   margin-top: 10px;
   font-weight: 600;
 `
-
 const Text = styled(Typography)`
-  color: #878787;
+  color: #fff9;
   font-size: 15px;
 `;
+
+const loginInitialValues = {
+  username: " ",
+  password: " "
+};
 
 const signupInitialValues = {
   name: " ",
@@ -69,18 +76,28 @@ const signupInitialValues = {
   password: " ",
 };
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [account, toggleAccount] = useState("login");
   const [signup, setSignup] = useState(signupInitialValues);
+  const [login, setLogin] = useState(loginInitialValues)
   const [error, setError] = useState('');
+
+  const { setAccount } = useContext(DataContext);
+
+  const navigate = useNavigate();
+  
+  const { isUserAuthenticated } = props;
+
   const onInputChange = (e) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
+
   const toggleSignup = () => {
     account === "signup" ? toggleAccount("login") : toggleAccount("signup");
   };
+
   const signupUser = async () => {
-    let res = await API.userSignp(signup);
+    let res = await API.userSignup(signup);
     if(res.isSuccess){
       setError('');
       setSignup(signupInitialValues);
@@ -89,6 +106,29 @@ const LoginForm = () => {
       setError('Something went wrong! Please try again.');
     }
   };
+
+  const onValueChange = (e) => {
+    setLogin({ ...login, [e.target.name]:e.target.value});
+  }
+
+  const userLogin = async () => {
+    let res = await API.userLogin(login);
+    if(res.isSuccess){
+      setError('');
+
+      sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
+      sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
+
+      setAccount({username: res.data.username, name: res.data.password})
+
+      navigate('/');
+
+      isUserAuthenticated(true);
+    } else {
+      setError('Something went wrong! Please try again.');
+    }
+  }
+
   return (
     <Component> 
       <Box style={{ margin: 50 }}>
@@ -107,15 +147,17 @@ const LoginForm = () => {
               variant="standard"
               name="username"
               label="Enter Username"
+              onChange={(e) => onValueChange(e)}
             />
             <TextField
               variant="standard"
               name="password"
               type="password"
               label="Enter Password"
+              onChange={(e) => onValueChange(e)}
             />
-
-            <LoginButton variant="contained">Login</LoginButton>
+             { error && <Error>{error}</Error> }
+            <LoginButton variant="contained" onClick={ () => userLogin () } >Login</LoginButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
             <SignupButton
               onClick={() => toggleSignup()}
@@ -146,10 +188,10 @@ const LoginForm = () => {
               label="Enter Password"
             />
 
-          { error && <Error>{error}</Error>}
+          { error && <Error>{error}</Error> }
             <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
-            <LoginButton variant="contained" onClick={() => toggleSignup()}>
+            <LoginButton variant="contained" onClick={toggleSignup}>
               Already have an account?
             </LoginButton>
           </Wrapper>
