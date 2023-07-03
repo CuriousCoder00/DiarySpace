@@ -11,6 +11,8 @@ import Home from "./components/home/Home";
 import Header from "./components/header/Header";
 import { useState } from "react";
 import CreatePost from "./components/create/CreatePost";
+import Update from "./components/create/Update";
+import DetailView from "./components/details/DetailView";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ?
@@ -19,7 +21,7 @@ const PrivateRoute = ({ isAuthenticated, ...props }) => {
       <Outlet />
     </>
   :
-    <Navigate replace to="/login" />
+    <Navigate replace to="/account" />
 };
 
 function App() {
@@ -30,7 +32,7 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/login"
+            path="/account"
             element={<Login isUserAuthenticated={isUserAuthenticated} />}
           />
           <Route
@@ -45,6 +47,12 @@ function App() {
           >
             <Route  path="/create" element={<CreatePost/>} />
           </Route>
+          <Route path='/update/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route path='/update/:id' element={<Update/> } />
+            </Route>
+            <Route path='/details/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route path='/details/:id' element={<DetailView/> } />
+            </Route>
         </Routes>
       </Router>
     </DataProvider>

@@ -28,7 +28,7 @@ export const uploadImage = (req, res) => {
 export const getImage = async (req, res) => {
   try {
     const file = await gfs.files.findOne({filename: req.params.filename});
-    const readStream = gridsBucket.openDownloadStream(file._id);
+    const readStream = gridfsBucket.openDownloadStream(file._id);
     readStream.pipe(res);
   } catch (error) {
     return res.status(500).json({msg: error.message});

@@ -51,8 +51,8 @@ export const getPost = async (req, res) => {
 }
 
 export const getAllPosts = async (req, res) => {
-    let username = res.query.username;
-    let category = res.query.category;
+    let username = req.query.username;
+    let category = req.query.category;
     let posts;
     try {
         if(username) 
