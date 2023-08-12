@@ -18,7 +18,7 @@ const StyledTable = styled(Table)`
 const Container = styled(Box)`
     display: flex;
     justify-content: center;
-    align-item: center;
+    align-items: center;
     height: 3rem;
     margin: 5px;
 `;

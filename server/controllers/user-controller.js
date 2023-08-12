@@ -42,6 +42,6 @@ export const UserLogin = async (req, res) => {
 export const UserLogout = async (req, res) => {
     const token = req.body.token;
     await Token.deleteOne({token: token});
-
+    localStorage.removeItem('user');
     res.status(204).json({msg: 'Logout Successfull'});
 }

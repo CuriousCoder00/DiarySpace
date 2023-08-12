@@ -6,8 +6,9 @@ import Token from "../model/token.js";
 dotenv.config();
 
 export const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
   const token =
-    req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
+    authHeader && authHeader.split(' ')[1];
   if (token === null) return res.status(401).json({ msg: "token not found" });
 
   jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err, user) => {

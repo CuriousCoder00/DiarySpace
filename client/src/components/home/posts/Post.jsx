@@ -22,7 +22,7 @@ const Image = styled('img')({
 });
 
 const Text = styled(Typography)`
-    color: #878787
+    color: #878787;
     font-size: 12px;
 `;
 

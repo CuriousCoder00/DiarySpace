@@ -12,20 +12,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider";
 import { API } from "../../services/Api";
 
-const Container = styled(Box)`
-  margin: 10px 100px;
-`;
+const Container = styled(Box)(({ theme }) => ({
+  margin: '50px 100px',
+  [theme.breakpoints.down('md')]: {
+      margin: 0
+  }
+}));
 
-const Image = styled("img")`
-  width: 100%;
-`;
-
-const ImageContainer = styled(Box)`
-  width: 100%;
-  border-radius: 8px;
-  height: 40vh;
-  overflow: hidden;
-`;
+const Image = styled('img')({
+  width: '100%',
+  height: '50vh',
+  objectFit: 'cover'
+});
 
 const StyledFormControl = styled(FormControl)`
   margin-top: 10px;
@@ -34,8 +32,9 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const InputTexTField = styled(OutlinedInput)`
-  flex: 1;
-  margin: 0 5px;
+flex: 1;
+margin: 0 30px;
+font-size: 25px;
 `;
 
 const StyledButton = styled(Button)`
@@ -74,21 +73,31 @@ const CreatePost = () => {
   const { account } = useContext(DataContext);
 
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.value]: e.target.name });
+    setPost({ ...post, [e.target.name]: e.target.value });
   };
 
-  const getImage = async () => {
-    if (file) {
-      const data = new FormData();
-      data.append("name", file.name);
-      data.append("file", file);
+  // const getImage = async () => {
+  //   if (file) {
+  //     const data = new FormData();
+  //     data.append("name", file.name);
+  //     data.append("file", file);
 
-      const res = await API.uploadFile(data);
-      post.picture = res.data;
-    }
-  };
+  //     const res = await API.uploadFile(data);
+  //     post.picture = res.data;
+  //   }
+  // };
   
   useEffect(() => {
+    const getImage = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+  
+        const res = await API.uploadFile(data);
+        post.picture = res.data;
+      }
+    }
     getImage();
     post.category = location.search?.split("=")[1] || "All";
     post.username = account.username;
@@ -103,9 +112,7 @@ const CreatePost = () => {
   return (
     <>
       <Container>
-        <ImageContainer>
           <Image src={url} />
-        </ImageContainer>
         <StyledFormControl>
           <label htmlFor="fileInput" style={{ padding: "10px" }}>
             <Add fontSize="large" color="action" />
