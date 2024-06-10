@@ -1,18 +1,16 @@
 import axios from "axios";
 
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from "../constants/config";
-import {
-  getAccessToken,
-  getType,
-} from "../utils/common-utils";
 
-const API_URL = "https://diaryspace-server.onrender.com";
+import { getAccessToken, getType } from "../utils/common-utils";
+
+const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 10000,
   headers: {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
   },
 });
 

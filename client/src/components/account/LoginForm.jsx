@@ -188,8 +188,7 @@ const LoginForm = (props) => {
               label="Enter Password"
             />
 
-          { error && <Error>{error}</Error> }
-            <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
+             <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
             <LoginButton variant="contained" onClick={toggleSignup}>
               Already have an account?

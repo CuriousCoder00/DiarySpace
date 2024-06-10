@@ -9,12 +9,12 @@ import {
 import Login from "./components/account/Login";
 import Home from "./components/home/Home";
 import Header from "./components/header/Header";
-import { useState } from "react";
 import CreatePost from "./components/create/CreatePost";
 import Update from "./components/create/Update";
 import DetailView from "./components/details/DetailView";
 import About from "./components/about/About";
 import Contact from "./components/contact/Contact";
+import { useState } from "react";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ?

@@ -76,28 +76,18 @@ const CreatePost = () => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
 
-  // const getImage = async () => {
-  //   if (file) {
-  //     const data = new FormData();
-  //     data.append("name", file.name);
-  //     data.append("file", file);
+  const getImage = async () => {
+    if (file) {
+      const data = new FormData();
+      data.append("name", file.name);
+      data.append("file", file);
 
-  //     const res = await API.uploadFile(data);
-  //     post.picture = res.data;
-  //   }
-  // };
+      const res = await API.uploadFile(data);
+      post.picture = res.data;
+    }
+  };
   
   useEffect(() => {
-    const getImage = async () => {
-      if (file) {
-        const data = new FormData();
-        data.append("name", file.name);
-        data.append("file", file);
-  
-        const res = await API.uploadFile(data);
-        post.picture = res.data;
-      }
-    }
     getImage();
     post.category = location.search?.split("=")[1] || "All";
     post.username = account.username;
@@ -114,16 +104,6 @@ const CreatePost = () => {
       <Container>
           <Image src={url} />
         <StyledFormControl>
-          <label htmlFor="fileInput" style={{ padding: "10px" }}>
-            <Add fontSize="large" color="action" />
-          </label>
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            id="fileInput"
-            style={{ display: "none" }}
-            onChange={(e) => setFile(e.target.files[0])}
-          />
           <InputTexTField
             placeholder="Title"
             name="title"
